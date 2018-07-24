@@ -1,0 +1,6 @@
+---
+- name: restart auditbeat
+  service:
+    name: "{{ auditbeat_combined.daemon }}"
+    state: restarted
+    sleep: 5
