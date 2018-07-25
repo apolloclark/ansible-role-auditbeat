@@ -1052,26 +1052,47 @@ setup.dashboards:
 
 
 
+{% if 'kibana' in auditbeat_combined.setup and 
+   auditbeat_combined.setup.kibana %}
 #============================== Kibana =====================================
 
 # Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
 # This requires a Kibana endpoint configuration.
-# setup.kibana:
+setup.kibana:
 
+  {% if 'host' in auditbeat_combined.setup.kibana and 
+         auditbeat_combined.setup.kibana.host %}
   # Kibana Host
   # Scheme and port can be left out and will be set to the default (http and 5601)
   # In case you specify and additional path, the scheme is required: http://localhost:5601/path
   # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
-  #host: "localhost:5601"
+  host: "{{ auditbeat_combined.setup.kibana.host }}"
+  {% endif %}
 
+  {% if 'protocol' in auditbeat_combined.setup.kibana and 
+         auditbeat_combined.setup.kibana.protocol %}
   # Optional protocol and basic auth credentials.
-  #protocol: "https"
-  #username: "elastic"
-  #password: "changeme"
+  protocol: "{{ auditbeat_combined.setup.kibana.protocol }}"
+  {% endif %}
 
+  {% if 'username' in auditbeat_combined.setup.kibana and 
+         auditbeat_combined.setup.kibana.username %}
+  username: "{{ auditbeat_combined.setup.kibana.username }}"
+  {% endif %}
+
+  {% if 'password' in auditbeat_combined.setup.kibana and 
+         auditbeat_combined.setup.kibana.password %}
+  password: "{{ auditbeat_combined.setup.kibana.password }}"
+  {% endif %}
+
+  {% if 'path' in auditbeat_combined.setup.kibana and 
+         auditbeat_combined.setup.kibana.path %}
   # Optional HTTP Path
-  #path: ""
+  path: "{{ auditbeat_combined.setup.kibana.path }}"
+  {% endif %}
 
+  {% if 'ssl' in auditbeat_combined.setup.kibana and 
+         auditbeat_combined.setup.kibana.ssl %}
   # Use SSL settings for HTTPS. Default is true.
   #ssl:
     #enabled: true
@@ -1104,6 +1125,8 @@ setup.dashboards:
   
     # Configure curve types for ECDHE based cipher suites
     #curve_types: []
+  {% endif %}
+{% endif %}
 
 
 

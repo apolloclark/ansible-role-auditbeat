@@ -45,12 +45,12 @@ auditbeat_defaults:
       failure_mode: "silent"
       backlog_limit: 8196
       rate_limit: 0
-      include_raw_message: "false"
-      include_warnings: "false"
+      include_raw_message: "true"
+      include_warnings: "true"
       socket_type: "multicast"
       audit_rules:
         # https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-auditd.html#_audit_rules
-        # https://gist.github.com/tsg/eb7a3beb511b81c083afa905c035f901
+        # https://github.com/xeraa/vagrant-elastic-stack/blob/master/elastic-stack/templates/auditbeat.yml
         # https://github.com/elastic/beats/pull/5516
 
         ## If you are on a 64 bit platform, everything should be running
@@ -62,6 +62,9 @@ auditbeat_defaults:
         ## Executions.
         - a always,exit -F arch=b64 -S execve,execveat -k exec
     
+        # Log all executed processes
+        - a always,exit -S execve
+
         ## Identity changes.
         - w /etc/group -p wa -k identity
         - w /etc/passwd -p wa -k identity
@@ -72,14 +75,11 @@ auditbeat_defaults:
         ## Unauthorized access attempts.
         - a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EACCES -k access
         - a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EPERM -k access
-    
-        # Log read access to passwd from selected users (33=www-data)
-        - a exit,always -F path=/etc/passwd -F perm=r -F uid=33 -k www-passwd-read
-    
-        ## Log processes that call the `socket` system call
-        - a always,exit -F arch=b64 -S socket -F a0=2 -k socket
-        - a always,exit -F arch=b64 -S socket -F a0=10 -k socket
-    
+
+        ## Log basically every network connection call
+        - a always,exit -F arch=b64 -S socket,connect,sendto,accept,bind,recvfrom,listen,sendmsg -k socket
+        - a always,exit -F arch=b32 -S socket,connect,sendto,bind,recvfrom,listen,sendmsg -k socket
+
         ## The purpose of this rule is to detect when an admin may be abusing power
         ## by looking in user's home dir.
         - a always,exit -F dir=/home -F uid=0 -F auid>=1000 -F auid!=4294967295 -C auid!=obj_uid -F key=power-abuse
@@ -168,14 +168,15 @@ auditbeat_defaults:
   setup:
     # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-dashboards.html
     dashboards:
-      enabled: "false"
+      enabled: "true"
       directory: '${path.home}/kibana'
       url: ""
       file: ""
       beat: "auditbeat"
       kibana_index: ".kibana"
       index: "auditbeat-*"
-      always_kibana: "false"
+      always_kibana: "true"
+      retry.enabled: "true"
 
     # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html
     template:
@@ -190,7 +191,12 @@ auditbeat_defaults:
         # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping-source-field.html
         # _source:
 
-    kibana: []
+    kibana:
+      host: "127.0.0.1:5601"
+      protocol: "http"
+      usernamee: ""
+      password: ""
+      path: ""
   
   # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-monitor.html
   xpack:
