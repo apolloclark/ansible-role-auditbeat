@@ -1009,7 +1009,9 @@ setup.dashboards:
 
 
 #============================== Template =====================================
-
+#
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-template.html#configuration-template
+#
 # A template is used to set the mapping in Elasticsearch
 # By default template loading is enabled and the template is loaded.
 # These settings can be adjusted to load your own template or overwrite existing ones.
@@ -1030,7 +1032,7 @@ setup.dashboards:
 #setup.template.fields: "${path.config}/fields.yml"
 
 # Overwrite existing template
-#setup.template.overwrite: false
+#setup.template.overwrite: true
 
 # Elasticsearch template settings
 # setup.template.settings:

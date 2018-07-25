@@ -61,7 +61,7 @@
     platform: "{{ print_architecture.stdout }}"
 
 # http://docs.ansible.com/ansible/latest/service_module.html
-- name: Make sure auditbeat autostarts
+- name: Ensure auditbeat auto-starts
   service:
     name: auditbeat
     enabled: yes
@@ -75,6 +75,13 @@
     group: root
     mode: 0644
   when: "auditbeat_combined.install_only != 'true'"
+
+# https://docs.ansible.com/ansible/latest/modules/command_module.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html
+- name: Configure the Elasticsearch index template
+  command: auditbeat setup --template -E output.logstash.enabled=false -E output.elasticsearch.enabled=true -E 'output.elasticsearch.hosts=["{{ auditbeat_combined.elk_hosts }}"]'
+  when:
+    - auditbeat_combined.setup.dashboards.enabled
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Restart auditbeat

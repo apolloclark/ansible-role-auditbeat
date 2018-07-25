@@ -1009,6 +1009,9 @@ setup.dashboards:
 
 
 #============================== Template =====================================
+#
+# https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html#configuration-template
+#
 
 # A template is used to set the mapping in Elasticsearch
 # By default template loading is enabled and the template is loaded.
