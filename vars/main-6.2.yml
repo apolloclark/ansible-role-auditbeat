@@ -168,7 +168,7 @@ auditbeat_defaults:
   setup:
     # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-dashboards.html
     dashboards:
-      enabled: "true"
+      enabled: "false"
       directory: '${path.home}/kibana'
       url: ""
       file: ""
