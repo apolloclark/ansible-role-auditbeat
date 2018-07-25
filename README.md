@@ -1,6 +1,6 @@
 # Ansible Role: auditbeat
 
-Ansible Role to install and configure Elastic Auditbeat for Ubuntu.
+Ansible Role to install and configure Elastic auditbeat for Ubuntu.
 
 
 ## Requirements
@@ -31,4 +31,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2018 by [Apollo Clark](https://www.apolloclark.com/)
+This role was created in 2017 by [Apollo Clark](https://www.apolloclark.com/)
