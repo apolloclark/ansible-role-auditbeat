@@ -49,6 +49,7 @@
   when:
     - auditbeat_combined.version is version('6', '>=')
     - auditbeat_combined.version is version('7', '<')
+    - auditbeat_combined.install_repo
 
 # https://docs.ansible.com/ansible/latest/modules/command_module.html
 - name: Get the platform (i386 or amd64) of the virtual machine
