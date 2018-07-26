@@ -9,5 +9,5 @@ auditbeat_defaults:
   daemon: "auditbeat"
   version: "6.2.0"
   config_include_dir: "/etc/auditbeat/"
-  install_only: "false"
-  install_repo: "true"
+  install_only: false
+  install_repo: true

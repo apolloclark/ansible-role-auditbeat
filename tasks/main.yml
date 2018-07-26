@@ -22,7 +22,7 @@
     id: "46095ACC8548582C1A2699A9D27D666CD88E42B4"
     state: present
   when:
-    - (auditbeat_combined.install_repo == 'true')
+    - auditbeat_combined.install_repo
 
 # http://docs.ansible.com/ansible/latest/apt_repository_module.html
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
@@ -31,15 +31,15 @@
     repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
     state: present
   when:
-    - (auditbeat_combined.version is version('6', '>='))
-    - (auditbeat_combined.version is version('7', '<'))
-    - (auditbeat_combined.install_repo == 'true')
+    - auditbeat_combined.version is version('6', '>=')
+    - auditbeat_combined.version is version('7', '<')
+    - auditbeat_combined.install_repo
 
 # https://docs.ansible.com/ansible/latest/modules/apt_module.html
 - name: Update apt cache
   apt: update_cache=yes
   when:
-    - (auditbeat_combined.install_repo == 'true')
+    - auditbeat_combined.install_repo
 
 # https://docs.ansible.com/ansible/latest/modules/apt_module.html
 - name: Install a specific version from the repo
@@ -47,8 +47,8 @@
     name: "auditbeat={{ auditbeat_combined.version }}"
     state: present
   when:
-    - (auditbeat_combined.version is version('6', '>='))
-    - (auditbeat_combined.version is version('7', '<'))
+    - auditbeat_combined.version is version('6', '>=')
+    - auditbeat_combined.version is version('7', '<')
 
 # https://docs.ansible.com/ansible/latest/modules/command_module.html
 - name: Get the platform (i386 or amd64) of the virtual machine
@@ -74,21 +74,23 @@
     owner: root
     group: root
     mode: 0644
-  when: "auditbeat_combined.install_only != 'true'"
+  when: 
+    - not auditbeat_combined.install_only
 
 # https://docs.ansible.com/ansible/latest/modules/command_module.html
 # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html
 - name: Configure the Elasticsearch index template
-  command: auditbeat setup --template -E output.logstash.enabled=false -E output.elasticsearch.enabled=true -E 'output.elasticsearch.hosts=["{{ auditbeat_combined.elk_hosts }}"]'
+  command: auditbeat setup --template -E output.logstash.enabled=false -E output.elasticsearch.enabled=true -E 'output.elasticsearch.hosts=["{{ item }}"]'
+  loop: "{{ auditbeat_combined.output.elasticsearch.hosts }}"
   when:
-    - auditbeat_combined.setup.dashboards.enabled
+    - auditbeat_combined.setup.template.enabled
+    - auditbeat_combined.output.elasticsearch.hosts
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Restart auditbeat
   service:
     name: "{{ auditbeat_combined.daemon }}"
     state: restarted
-    sleep: 15
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Ensure that the service is running

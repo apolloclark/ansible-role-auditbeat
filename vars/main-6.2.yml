@@ -5,19 +5,19 @@ auditbeat_defaults:
   daemon: "auditbeat"
   version: "6.2.0"
   config_include_dir: "/etc/auditbeat/"
-  install_only: "false"
-  install_repo: "true"
+  install_only: false
+  install_repo: true
   
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-general-options.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-general-options.html
   name: "auditbeat"
   tags: ["demo"]
   fields:
     env: "staging"
-  fields_under_root: "false"
+  fields_under_root: false
   max_procs: "1"
   max_start_delay: "10s"
   
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuring-internal-queue.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuring-internal-queue.html
   queue:
     mem:
       events: 4096
@@ -35,21 +35,21 @@ auditbeat_defaults:
     modules:
       path: "${path.config}/conf.d/*.yml"
       reload:
-        enabled: "false"
+        enabled: false
         period: "10s"
 
   modules:
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-auditd.html#_configuration_options_13
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-auditd.html#_configuration_options_13
     auditd:
-      resolve_ids: "true"
+      resolve_ids: true
       failure_mode: "silent"
       backlog_limit: 8196
       rate_limit: 0
-      include_raw_message: "true"
-      include_warnings: "true"
+      include_raw_message: true
+      include_warnings: true
       socket_type: "multicast"
       audit_rules:
-        # https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-auditd.html#_audit_rules
+        # https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-auditd.html#_audit_rules
         # https://github.com/xeraa/vagrant-elastic-stack/blob/master/elastic-stack/templates/auditbeat.yml
         # https://github.com/elastic/beats/pull/5516
 
@@ -92,7 +92,7 @@ auditbeat_defaults:
         - a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -F key=elevated-privs
         - a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -F key=elevated-privs
         
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-file_integrity.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-file_integrity.html
     file_integrity:
       paths:
         - /bin
@@ -104,21 +104,21 @@ auditbeat_defaults:
         - '(?i)\.sw[nop]$'
         - '~$'
         - '/\.git($|/)'
-      scan_at_start: "true"
+      scan_at_start: true
       scan_rate_per_sec: "50 MiB"
       max_file_size: "100 MiB"
       hash_types: "[sha1]"
-      recursive: "false"
+      recursive: false
 
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/defining-processors.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/defining-processors.html
   processors: ""
 
   output:
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/elasticsearch-output.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/elasticsearch-output.html
     elasticsearch:
-      enabled: "false"
+      enabled: false
       hosts:
-        - "localhost:9200"
+        - "127.0.0.1:9200"
       compression_level: 0
       worker: 1
       protocol: "http" # "https"
@@ -137,18 +137,18 @@ auditbeat_defaults:
       timeout: 90
       ssl: []
     
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/logstash-output.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/logstash-output.html
     logstash:
-      enabled: "false"
+      enabled: false
       hosts:
-        - "localhost:5044"
+        - "127.0.0.1:5044"
       compression_level: 3
       worker: 1
-      loadbalance: "false"
+      loadbalance: false
       ttl: 0
       pipelining: 2
       proxy_url: ""
-      proxy_use_local_resolver: "false"
+      proxy_use_local_resolver: false
       index: "" # "auditbeat-%{[beat.version]}-%{+yyyy.MM.dd}"
       timeout: 30
       max_retries: 3
@@ -156,7 +156,7 @@ auditbeat_defaults:
       slow_start: false
       ssl: []
 
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/kafka-output.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/kafka-output.html
     kafka: []
 
     redis: []
@@ -166,32 +166,32 @@ auditbeat_defaults:
     console: []
 
   setup:
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-dashboards.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-dashboards.html
     dashboards:
-      enabled: "false"
+      enabled: false
       directory: '${path.home}/kibana'
       url: ""
       file: ""
       beat: "auditbeat"
       kibana_index: ".kibana"
       index: "auditbeat-*"
-      always_kibana: "true"
-      retry.enabled: "true"
+      always_kibana: true
+      retry.enabled: true
 
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-template.html
     template:
-      enabled: "true"
+      enabled: false
       name: "auditbeat"
       pattern: "auditbeat-*"
       fields: "fields.yml"
-      overwrite: "false"
+      overwrite: false
       # settings:
-        # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping.html
+        # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping.html
         # index:
-        # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping-source-field.html
+        # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping-source-field.html
         # _source:
 
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/setup-kibana-endpoint.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/current/setup-kibana-endpoint.html
     kibana:
       host: "127.0.0.1:5601"
       protocol: "http"
@@ -199,19 +199,19 @@ auditbeat_defaults:
       password: ""
       path: ""
   
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-monitor.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-monitor.html
   xpack:
     monitoring: []
 
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-logging.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-logging.html
   logging:
-    to_syslog: "false"
-    to_eventlog: "false"
-    to_files: "true"
+    to_syslog: false
+    to_eventlog: false
+    to_files: true
     level: "info"
     selectors: '["*"]'
     metrics:
-      enabled: "true"
+      enabled: true
       period: "30s"
     files:
       path: "/var/log/auditbeat"
@@ -219,5 +219,4 @@ auditbeat_defaults:
       rotateeverybytes: "10485760"
       keepfiles: "7"
       permissions: "0600"
-    json: "false"
-        
+    json: false
