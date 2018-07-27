@@ -10,8 +10,6 @@
 
 
 
-
-
 #================================ General ======================================
 
 {% if 'name' in auditbeat_combined %}
@@ -37,7 +35,6 @@ fields:
   {{ key }}: "{{ val }}"
   {% endfor %}
 {% endif %}
-
 
 {% if 'fields_under_root' in auditbeat_combined %}
 # If this option is set to true, the custom fields are stored as top-level
@@ -135,8 +132,6 @@ path:
 
 
 
-
-
 {% if 'config' in auditbeat_combined %}
 #============================  Config Reloading ================================
 
@@ -166,8 +161,6 @@ config:
     {% endif %}
   {% endif %}
 {% endif %}
-
-
 
 
 
@@ -278,7 +271,6 @@ auditbeat.modules:
 
 
 
-
 #================================ Processors ===================================
 #
 # https://www.elastic.co/guide/en/beats/auditbeat/6.2/defining-processors.html
@@ -351,8 +343,6 @@ auditbeat.modules:
 
 
 
-
-
 #============================= Elastic Cloud ==================================
 
 # These settings simplify using beatname with the Elastic Cloud (https://cloud.elastic.co/).
@@ -365,8 +355,6 @@ auditbeat.modules:
 # The cloud.auth setting overwrites the `output.elasticsearch.username` and
 # `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
 #cloud.auth:
-
-
 
 
 
@@ -522,9 +510,6 @@ output.elasticsearch:
   {% endif %}
 {% endif %}
 
-
-
-
 {% if 'logstash' in auditbeat_combined.output and 
    auditbeat_combined.output.logstash %}
 #----------------------------- Logstash output ---------------------------------
@@ -646,8 +631,6 @@ output.logstash:
     #renegotiation: never
   {% endif %}
 {% endif %}
-
-
 
 #------------------------------- Kafka output ----------------------------------
 #
@@ -789,8 +772,6 @@ output.logstash:
     # never, once, and freely. Default is never.
     #renegotiation: never
 
-
-
 #------------------------------- Redis output ----------------------------------
 #output.redis:
   # Boolean flag to enable or disable the output module.
@@ -893,8 +874,6 @@ output.logstash:
     # never, once, and freely. Default is never.
     #renegotiation: never
 
-
-
 #------------------------------- File output -----------------------------------
 #output.file:
   # Boolean flag to enable or disable the output module.
@@ -921,8 +900,6 @@ output.logstash:
   # Permissions to use for file creation. The default is 0600.
   #permissions: 0600
 
-
-
 #----------------------------- Console output ---------------------------------
 #output.console:
   # Boolean flag to enable or disable the output module.
@@ -930,8 +907,6 @@ output.logstash:
 
   # Pretty print json event
   #pretty: false
-
-
 
 
 
@@ -1001,8 +976,6 @@ setup.dashboards:
 
 
 
-
-
 #============================== Template =====================================
 #
 # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html#configuration-template
@@ -1045,8 +1018,6 @@ setup.dashboards:
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping-source-field.html
   #_source:
     #enabled: false
-
-
 
 
 
@@ -1125,8 +1096,6 @@ setup.kibana:
     #curve_types: []
   {% endif %}
 {% endif %}
-
-
 
 
 
@@ -1233,8 +1202,6 @@ logging:
 
 
 
-
-
 #============================== Xpack Monitoring =====================================
 #
 # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-monitor.html
@@ -1327,8 +1294,6 @@ logging:
     # Configure what types of renegotiation are supported. Valid options are
     # never, once, and freely. Default is never.
     #renegotiation: never
-
-
 
 
 
