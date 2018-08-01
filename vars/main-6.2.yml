@@ -8,7 +8,7 @@ auditbeat_defaults:
   install_only: false
   install_repo: true
   
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-general-options.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-general-options.html
   name: "auditbeat"
   tags: ["demo"]
   fields:
@@ -17,7 +17,7 @@ auditbeat_defaults:
   max_procs: "1"
   max_start_delay: "10s"
   
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuring-internal-queue.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuring-internal-queue.html
   queue:
     mem:
       events: 4096
@@ -39,7 +39,7 @@ auditbeat_defaults:
         period: "10s"
 
   modules:
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-auditd.html#_configuration_options_13
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-auditd.html#_configuration_options_13
     auditd:
       resolve_ids: true
       failure_mode: "silent"
@@ -49,7 +49,7 @@ auditbeat_defaults:
       include_warnings: true
       socket_type: "multicast"
       audit_rules:
-        # https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-auditd.html#_audit_rules
+        # https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-auditd.html#_audit_rules
         # https://github.com/xeraa/vagrant-elastic-stack/blob/master/elastic-stack/templates/auditbeat.yml
         # https://github.com/elastic/beats/pull/5516
 
@@ -92,7 +92,7 @@ auditbeat_defaults:
         - a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -F key=elevated-privs
         - a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -F key=elevated-privs
         
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-file_integrity.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-file_integrity.html
     file_integrity:
       paths:
         - /bin
@@ -110,11 +110,11 @@ auditbeat_defaults:
       hash_types: "[sha1]"
       recursive: false
 
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/defining-processors.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/defining-processors.html
   processors: ""
 
   output:
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/elasticsearch-output.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/elasticsearch-output.html
     elasticsearch:
       enabled: false
       hosts:
@@ -137,7 +137,7 @@ auditbeat_defaults:
       timeout: 90
       ssl: []
     
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/logstash-output.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/logstash-output.html
     logstash:
       enabled: false
       hosts:
@@ -156,7 +156,7 @@ auditbeat_defaults:
       slow_start: false
       ssl: []
 
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/kafka-output.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/kafka-output.html
     kafka: []
 
     redis: []
@@ -166,7 +166,7 @@ auditbeat_defaults:
     console: []
 
   setup:
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-dashboards.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-dashboards.html
     dashboards:
       enabled: false
       directory: '${path.home}/kibana'
@@ -178,7 +178,7 @@ auditbeat_defaults:
       always_kibana: true
       retry.enabled: true
 
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-template.html
+    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html
     template:
       enabled: false
       name: "auditbeat"
@@ -186,9 +186,9 @@ auditbeat_defaults:
       fields: "fields.yml"
       overwrite: false
       # settings:
-        # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping.html
+        # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping.html
         # index:
-        # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping-source-field.html
+        # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping-source-field.html
         # _source:
 
     # https://www.elastic.co/guide/en/beats/auditbeat/current/setup-kibana-endpoint.html
@@ -199,11 +199,11 @@ auditbeat_defaults:
       password: ""
       path: ""
   
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-monitor.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-monitor.html
   xpack:
     monitoring: []
 
-  # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-logging.html
+  # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-logging.html
   logging:
     to_syslog: false
     to_eventlog: false

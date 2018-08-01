@@ -10,6 +10,8 @@
 
 
 
+
+
 #================================ General ======================================
 
 {% if 'name' in auditbeat_combined %}
@@ -36,6 +38,7 @@ fields:
   {% endfor %}
 {% endif %}
 
+
 {% if 'fields_under_root' in auditbeat_combined %}
 # If this option is set to true, the custom fields are stored as top-level
 # fields in the output document instead of being grouped under a fields
@@ -45,7 +48,7 @@ fields_under_root: {{ auditbeat_combined.fields_under_root }}
 
 {% if 'queue' in auditbeat_combined %}
 # Internal queue configuration for buffering events to be published.
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuring-internal-queue.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuring-internal-queue.html
 queue:
 
   {% if 'mem' in auditbeat_combined.queue %}
@@ -132,6 +135,8 @@ path:
 
 
 
+
+
 {% if 'config' in auditbeat_combined %}
 #============================  Config Reloading ================================
 
@@ -164,13 +169,15 @@ config:
 
 
 
+
+
 #==========================  Modules configuration =============================
 auditbeat.modules:
   
 {% if 'auditd' in auditbeat_combined.modules %}
 #----------------------------- Auditd module -----------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-auditd.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-auditd.html
 #
 # The auditd module collects events from the audit framework in the Linux
 # kernel. You need to specify audit rules for the events that you want to audit.
@@ -213,7 +220,7 @@ auditbeat.modules:
 {% if 'file_integrity' in auditbeat_combined.modules %}
 #----------------------------- File Integrity module -----------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-file_integrity.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-file_integrity.html
 #
 # The file integrity module sends events when files are changed (created,
 # updated, deleted). The events contain file metadata and hashes.
@@ -271,9 +278,10 @@ auditbeat.modules:
 
 
 
+
 #================================ Processors ===================================
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/defining-processors.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/defining-processors.html
 #
 # Processors are used to reduce the number of fields in the exported event or to
 # enhance the event with external metadata. This section defines a list of
@@ -343,6 +351,8 @@ auditbeat.modules:
 
 
 
+
+
 #============================= Elastic Cloud ==================================
 
 # These settings simplify using beatname with the Elastic Cloud (https://cloud.elastic.co/).
@@ -358,6 +368,8 @@ auditbeat.modules:
 
 
 
+
+
 #================================ Outputs ======================================
 #
 # Configure what output to use when sending the data collected by the beat.
@@ -366,7 +378,7 @@ auditbeat.modules:
    auditbeat_combined.output.elasticsearch %}
 #-------------------------- Elasticsearch output -------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/elasticsearch-output.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/elasticsearch-output.html
 #
 output.elasticsearch:
   
@@ -426,10 +438,28 @@ output.elasticsearch:
   index: "{{ auditbeat_combined.output.elasticsearch.index }}"
   {% endif %}
 
+  {% if 'indices' in auditbeat_combined.output.elasticsearch and 
+         auditbeat_combined.output.elasticsearch.indices %}
+  # Array of hosts to connect to.
+  # Scheme and port can be left out and will be set to the default (http and 9200)
+  # In case you specify and additional path, the scheme is required: http://localhost:9200/path
+  # IPv6 addresses should always be defined as: https://[2001:db8::1]:9200
+  indices:
+  {% for item in auditbeat_combined.output.elasticsearch.indices %}
+    - {{ item }}
+  {% endfor %}
+  {% endif %}
+
   {% if 'pipeline' in auditbeat_combined.output.elasticsearch and 
          auditbeat_combined.output.elasticsearch.pipeline %}
   # Optional ingest node pipeline. By default no pipeline will be used.
   pipeline: "{{ auditbeat_combined.output.elasticsearch.pipeline }}"
+  {% endif %}
+
+  {% if 'pipelines' in auditbeat_combined.output.elasticsearch and 
+         auditbeat_combined.output.elasticsearch.pipelines %}
+  # Optional ingest node pipeline. By default no pipeline will be used.
+  pipelines: "{{ auditbeat_combined.output.elasticsearch.pipelines }}"
   {% endif %}
 
   {% if 'path' in auditbeat_combined.output.elasticsearch and 
@@ -510,11 +540,14 @@ output.elasticsearch:
   {% endif %}
 {% endif %}
 
+
+
+
 {% if 'logstash' in auditbeat_combined.output and 
    auditbeat_combined.output.logstash %}
 #----------------------------- Logstash output ---------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/logstash-output.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/logstash-output.html
 #
 output.logstash:
   
@@ -632,9 +665,11 @@ output.logstash:
   {% endif %}
 {% endif %}
 
+
+
 #------------------------------- Kafka output ----------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/kafka-output.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/kafka-output.html
 #
 #output.kafka:
   # Boolean flag to enable or disable the output module.
@@ -772,6 +807,8 @@ output.logstash:
     # never, once, and freely. Default is never.
     #renegotiation: never
 
+
+
 #------------------------------- Redis output ----------------------------------
 #output.redis:
   # Boolean flag to enable or disable the output module.
@@ -874,6 +911,8 @@ output.logstash:
     # never, once, and freely. Default is never.
     #renegotiation: never
 
+
+
 #------------------------------- File output -----------------------------------
 #output.file:
   # Boolean flag to enable or disable the output module.
@@ -900,6 +939,8 @@ output.logstash:
   # Permissions to use for file creation. The default is 0600.
   #permissions: 0600
 
+
+
 #----------------------------- Console output ---------------------------------
 #output.console:
   # Boolean flag to enable or disable the output module.
@@ -910,11 +951,13 @@ output.logstash:
 
 
 
+
+
 {% if 'dashboards' in auditbeat_combined.setup and 
    auditbeat_combined.setup.dashboards %}
 #============================== Dashboards =====================================
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-dashboards.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-dashboards.html
 #
 # These settings control loading the sample dashboards to the Kibana index. Loading
 # the dashboards are disabled by default and can be enabled either by setting the
@@ -976,9 +1019,11 @@ setup.dashboards:
 
 
 
+
+
 #============================== Template =====================================
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html#configuration-template
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-template.html#configuration-template
 #
 
 # A template is used to set the mapping in Elasticsearch
@@ -1008,16 +1053,18 @@ setup.dashboards:
 
   # A dictionary of settings to place into the settings.index dictionary
   # of the Elasticsearch template. For more details, please check
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping.html
   #index:
     #number_of_shards: 1
     #codec: best_compression
     #number_of_routing_shards: 30
 
   # A dictionary of settings for the _source field. For more details, please check
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping-source-field.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping-source-field.html
   #_source:
     #enabled: false
+
+
 
 
 
@@ -1096,6 +1143,8 @@ setup.kibana:
     #curve_types: []
   {% endif %}
 {% endif %}
+
+
 
 
 
@@ -1202,9 +1251,11 @@ logging:
 
 
 
+
+
 #============================== Xpack Monitoring =====================================
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-monitor.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-monitor.html
 #
 # beatname can export internal metrics to a central Elasticsearch monitoring cluster.
 # This requires xpack monitoring to be enabled in Elasticsearch.
@@ -1294,6 +1345,8 @@ logging:
     # Configure what types of renegotiation are supported. Valid options are
     # never, once, and freely. Default is never.
     #renegotiation: never
+
+
 
 
 

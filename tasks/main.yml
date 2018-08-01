@@ -42,7 +42,7 @@
     - auditbeat_combined.install_repo
 
 # https://docs.ansible.com/ansible/latest/modules/apt_module.html
-- name: Install a specific version from the repo
+- name: Install from repo (if choosing the 5.6.x or 6.x version)
   apt:
     name: "auditbeat={{ auditbeat_combined.version }}"
     state: present
@@ -57,7 +57,7 @@
   register: print_architecture
 
 # https://docs.ansible.com/ansible/latest/modules/set_fact_module.html
-- name: And set the actual platform value as a variable
+- name: Set the actual platform value as a variable
   set_fact:
     platform: "{{ print_architecture.stdout }}"
 
@@ -75,7 +75,7 @@
     owner: root
     group: root
     mode: 0644
-  when: 
+  when:
     - not auditbeat_combined.install_only
 
 # https://docs.ansible.com/ansible/latest/modules/command_module.html

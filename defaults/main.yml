@@ -4,10 +4,3 @@ elastic_url: "https://artifacts.elastic.co"
 # Overload variables using the dict named "auditbeat"
 auditbeat:
   version: "6.2.0"
-
-auditbeat_defaults:
-  daemon: "auditbeat"
-  version: "6.2.0"
-  config_include_dir: "/etc/auditbeat/"
-  install_only: false
-  install_repo: true
