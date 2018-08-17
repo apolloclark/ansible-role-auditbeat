@@ -157,7 +157,36 @@ auditbeat_defaults:
       ssl: []
 
     # https://www.elastic.co/guide/en/beats/auditbeat/6.3/kafka-output.html
-    kafka: []
+    kafka:
+      enabled: false
+      hosts:
+        - "127.0.0.1:9092"
+      topic: "auditbeat"
+      key: ''
+      partition:
+        hash:
+          reachable_only: false
+          hash: []
+      username: ''
+      password: ''
+      version: '0.10.0'
+      metadata:
+        retry:
+          max: 3
+          backoff: 250ms
+        refresh_frequency: 10m
+      worker: 1
+      max_retires: 3
+      bulk_max_size: 2048
+      timeout: "30s"
+      broker_timeout: "10s"
+      channel_buffer_size: 256
+      keep_alive: 0
+      compression: "gzip"
+      max_message_bytes: 1000000
+      required_acks: 1
+      client_id: "beats"
+      ssl: []
 
     redis: []
 

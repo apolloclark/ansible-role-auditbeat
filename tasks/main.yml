@@ -81,7 +81,7 @@
 # https://docs.ansible.com/ansible/latest/modules/command_module.html
 # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html
 - name: Configure the Elasticsearch index template
-  command: auditbeat setup --template -E output.logstash.enabled=false -E output.elasticsearch.enabled=true -E 'output.elasticsearch.hosts=["{{ item }}"]'
+  command: auditbeat setup --template -E output.logstash.enabled=false -E output.kafka.enabled=false -E output.elasticsearch.enabled=true -E 'output.elasticsearch.hosts=["{{ item }}"]'
   loop: "{{ auditbeat_combined.output.elasticsearch.hosts }}"
   when:
     - auditbeat_combined.setup.template.enabled
