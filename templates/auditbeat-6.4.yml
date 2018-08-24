@@ -45,7 +45,7 @@ fields_under_root: {{ auditbeat_combined.fields_under_root }}
 
 {% if 'queue' in auditbeat_combined %}
 # Internal queue configuration for buffering events to be published.
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuring-internal-queue.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/configuring-internal-queue.html
 queue:
 
   {% if 'mem' in auditbeat_combined.queue %}
@@ -170,7 +170,7 @@ auditbeat.modules:
 {% if 'auditd' in auditbeat_combined.modules %}
 #----------------------------- Auditd module -----------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-auditd.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/auditbeat-module-auditd.html
 #
 # The auditd module collects events from the audit framework in the Linux
 # kernel. You need to specify audit rules for the events that you want to audit.
@@ -211,7 +211,7 @@ auditbeat.modules:
 {% if 'file_integrity' in auditbeat_combined.modules %}
 #----------------------------- File Integrity module -----------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/auditbeat-module-file_integrity.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/auditbeat-module-file_integrity.html
 #
 # The file integrity module sends events when files are changed (created,
 # updated, deleted). The events contain file metadata and hashes.
@@ -270,7 +270,7 @@ auditbeat.modules:
 
 #================================ Processors ===================================
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/defining-processors.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/defining-processors.html
 #
 # Processors are used to reduce the number of fields in the exported event or to
 # enhance the event with external metadata. This section defines a list of
@@ -363,7 +363,7 @@ auditbeat.modules:
    auditbeat_combined.output.elasticsearch %}
 #-------------------------- Elasticsearch output -------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/elasticsearch-output.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/elasticsearch-output.html
 #
 output.elasticsearch:
   
@@ -529,7 +529,7 @@ output.elasticsearch:
    auditbeat_combined.output.logstash %}
 #----------------------------- Logstash output ---------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/logstash-output.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/logstash-output.html
 #
 output.logstash:
   
@@ -651,7 +651,7 @@ output.logstash:
    auditbeat_combined.output.kafka %}
 #------------------------------- Kafka output ----------------------------------
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/kafka-output.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/kafka-output.html
 #
 output.kafka:
 
@@ -1024,7 +1024,7 @@ output.kafka:
    auditbeat_combined.setup.dashboards %}
 #============================== Dashboards =====================================
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-dashboards.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/configuration-dashboards.html
 #
 # These settings control loading the sample dashboards to the Kibana index. Loading
 # the dashboards are disabled by default and can be enabled either by setting the
@@ -1088,7 +1088,7 @@ setup.dashboards:
 
 #============================== Template =====================================
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-template.html#configuration-template
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/configuration-template.html#configuration-template
 #
 
 # A template is used to set the mapping in Elasticsearch
@@ -1118,14 +1118,14 @@ setup.dashboards:
 
   # A dictionary of settings to place into the settings.index dictionary
   # of the Elasticsearch template. For more details, please check
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/mapping.html
   #index:
     #number_of_shards: 1
     #codec: best_compression
     #number_of_routing_shards: 30
 
   # A dictionary of settings for the _source field. For more details, please check
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping-source-field.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/mapping-source-field.html
   #_source:
     #enabled: false
 
@@ -1314,7 +1314,7 @@ logging:
 
 #============================== Xpack Monitoring =====================================
 #
-# https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-monitor.html
+# https://www.elastic.co/guide/en/beats/auditbeat/6.4/configuration-monitor.html
 #
 # beatname can export internal metrics to a central Elasticsearch monitoring cluster.
 # This requires xpack monitoring to be enabled in Elasticsearch.
