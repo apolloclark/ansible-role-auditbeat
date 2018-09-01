@@ -86,12 +86,16 @@
   when:
     - auditbeat_combined.setup.template.enabled
     - auditbeat_combined.output.elasticsearch.hosts
+  when:
+    - not auditbeat_combined.install_only
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Restart auditbeat
   service:
     name: "{{ auditbeat_combined.daemon }}"
     state: restarted
+  when:
+    - not auditbeat_combined.install_only
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Ensure that the service is running
@@ -99,3 +103,5 @@
     name: auditbeat
     state: started
     enabled: yes
+  when:
+    - not auditbeat_combined.install_only
