@@ -207,19 +207,6 @@ auditbeat_defaults:
       always_kibana: true
       retry.enabled: true
 
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.3/configuration-template.html
-    template:
-      enabled: false
-      name: "auditbeat"
-      pattern: "auditbeat-*"
-      fields: "fields.yml"
-      overwrite: false
-      # settings:
-        # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping.html
-        # index:
-        # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/mapping-source-field.html
-        # _source:
-
     # https://www.elastic.co/guide/en/beats/auditbeat/current/setup-kibana-endpoint.html
     kibana:
       host: "127.0.0.1:5601"

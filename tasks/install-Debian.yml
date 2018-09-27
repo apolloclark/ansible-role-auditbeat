@@ -1,0 +1,31 @@
+---
+- name: Add repository key
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    id: "46095ACC8548582C1A2699A9D27D666CD88E42B4"
+    state: present
+  when:
+    - auditbeat_combined.install_repo
+
+- name: Add Elastic 6.x repo (if choosing a 6.x version)
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
+    state: present
+  when:
+    - auditbeat_combined.version is version('6', '>=')
+    - auditbeat_combined.version is version('7', '<')
+    - auditbeat_combined.install_repo
+
+- name: Update apt cache
+  apt: update_cache=yes
+  when:
+    - auditbeat_combined.install_repo
+
+- name: Install from repo (if choosing the 5.6.x or 6.x version)
+  apt:
+    name: "auditbeat={{ auditbeat_combined.version }}"
+    state: present
+  when:
+    - auditbeat_combined.version is version('6', '>=')
+    - auditbeat_combined.version is version('7', '<')
+    - auditbeat_combined.install_repo

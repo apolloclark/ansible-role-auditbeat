@@ -116,7 +116,7 @@ auditbeat_defaults:
   output:
     # https://www.elastic.co/guide/en/beats/auditbeat/6.4/elasticsearch-output.html
     elasticsearch:
-      enabled: false
+      enabled: true
       hosts:
         - "127.0.0.1:9200"
       compression_level: 0

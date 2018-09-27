@@ -1,4 +1,3 @@
----
 elastic_url: "https://artifacts.elastic.co"
 
 auditbeat_defaults:
@@ -207,19 +206,6 @@ auditbeat_defaults:
       always_kibana: true
       retry.enabled: true
 
-    # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-template.html
-    template:
-      enabled: false
-      name: "auditbeat"
-      pattern: "auditbeat-*"
-      fields: "fields.yml"
-      overwrite: false
-      # settings:
-        # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping.html
-        # index:
-        # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/mapping-source-field.html
-        # _source:
-
     # https://www.elastic.co/guide/en/beats/auditbeat/current/setup-kibana-endpoint.html
     kibana:
       host: "127.0.0.1:5601"
@@ -227,7 +213,7 @@ auditbeat_defaults:
       usernamee: ""
       password: ""
       path: ""
-  
+
   # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-monitor.html
   xpack:
     monitoring: []
