@@ -86,8 +86,6 @@
   when:
     - auditbeat_combined.setup.template.enabled
     - auditbeat_combined.output.elasticsearch.hosts
-  when:
-    - not auditbeat_combined.install_only
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Restart auditbeat
