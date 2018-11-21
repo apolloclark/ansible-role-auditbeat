@@ -200,6 +200,13 @@ auditbeat.modules:
   include_warnings: {{ auditbeat_combined.modules.auditd.include_warnings }}
   {% endif %}
 
+  {% if 'audit_rule_files' in auditbeat_combined.modules.auditd %}
+  audit_rule_files: |
+  {% for item in auditbeat_combined.modules.auditd.audit_rule_files %}
+    -{{ item }}
+  {% endfor %}
+  {% endif %}
+
   {% if 'audit_rules' in auditbeat_combined.modules.auditd %}
   audit_rules: |
   {% for item in auditbeat_combined.modules.auditd.audit_rules %}

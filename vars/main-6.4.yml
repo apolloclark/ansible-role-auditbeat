@@ -48,6 +48,7 @@ auditbeat_defaults:
       include_raw_message: true
       include_warnings: true
       socket_type: "multicast"
+      audit_rule_files: []
       audit_rules:
         # https://www.elastic.co/guide/en/beats/auditbeat/6.4/auditbeat-module-auditd.html#_audit_rules
         # https://github.com/xeraa/vagrant-elastic-stack/blob/master/elastic-stack/templates/auditbeat.yml
