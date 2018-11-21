@@ -104,3 +104,4 @@
     enabled: yes
   when:
     - not auditbeat_combined.install_only
+    - not auditbeat_combined.skip_restart
