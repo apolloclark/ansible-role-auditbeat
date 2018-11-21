@@ -7,6 +7,7 @@ auditbeat_defaults:
   config_include_dir: "/etc/auditbeat/"
   install_only: false
   install_repo: true
+  skip_restart: false
   
   # https://www.elastic.co/guide/en/beats/auditbeat/6.4/configuration-general-options.html
   name: "auditbeat"

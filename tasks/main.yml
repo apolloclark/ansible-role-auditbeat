@@ -94,6 +94,7 @@
     state: restarted
   when:
     - not auditbeat_combined.install_only
+    - not auditbeat_combined.skip_restart
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Ensure that the service is running
