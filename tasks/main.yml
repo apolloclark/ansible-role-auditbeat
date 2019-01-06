@@ -98,7 +98,7 @@
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Ensure that the service is running
-  service: 
+  service:
     name: auditbeat
     state: started
     enabled: yes
