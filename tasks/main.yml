@@ -8,11 +8,14 @@
 # https://docs.ansible.com/ansible/latest/modules/include_vars_module.html
 - name: Include defaults for configuration, per the requested version.
   include_vars:
-    file: "{{ lookup('first_found', configs, paths='vars') }}"
+    file: "{{ lookup('first_found', configs) }}"
   vars:
     configs:
-      - "vars/main-{{ version_simple }}.yml"
-      - "vars/main-{{ version_simple | regex_replace('^([0-9]+)\\..*', '\\1') }}.x.yml"
+      files:
+        - "main-{{ version_simple }}.yml"
+        - "main-{{ version_simple | regex_replace('^([0-9]+)\\..*', '\\1') }}.x.yml"
+      paths:
+        - vars
 
 # http://docs.ansible.com/ansible/latest/set_fact_module.html
 - name: Merge auditbeat_default and auditbeat variables
@@ -79,7 +82,7 @@
 # http://docs.ansible.com/ansible/latest/template_module.html
 - name: Copy config file
   template:
-    src: "{{ lookup('first_found', config_files, paths='templates') }}"
+    src: "{{ lookup('first_found', config_files) }}"
     dest: "{{ auditbeat_combined.config_include_dir }}/auditbeat.yml"
     owner: root
     group: root
@@ -88,8 +91,11 @@
     - not auditbeat_combined.install_only
   vars:
     config_files:
-      - "templates/auditbeat-{{ version_simple }}.yml"
-      - "templates/auditbeat-{{ version_simple | regex_replace('([0-9]+)\\..*', '\\1') }}.x.yml"
+      files:
+        - "auditbeat-{{ version_simple }}.yml"
+        - "auditbeat-{{ version_simple | regex_replace('([0-9]+)\\..*', '\\1') }}.x.yml"
+      paths:
+        - templates
     version: "{{ version_simple if version_simple is not search('x') else 'latest' }}"
 
 # https://docs.ansible.com/ansible/latest/modules/command_module.html
