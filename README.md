@@ -15,6 +15,8 @@ You can overload the variables by creating a dictionary called "auditbeat", ex:
     auditbeat:
       version: 6.3.2
 
+Use `version: 6.x` to get the latest minor release.
+
 ## Dependencies
 
 None.

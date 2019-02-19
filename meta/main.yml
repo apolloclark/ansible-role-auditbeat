@@ -7,7 +7,7 @@ galaxy_info:
   description: Install and configure Elastic Auditbeat
   company: "Apollo Clark"
   license: "license (BSD, MIT)"
-  min_ansible_version: 2.2
+  min_ansible_version: 2.5
   platforms:
     - name: Ubuntu
       versions:

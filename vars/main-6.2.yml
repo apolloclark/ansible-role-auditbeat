@@ -3,12 +3,11 @@ elastic_url: "https://artifacts.elastic.co"
 
 auditbeat_defaults:
   daemon: "auditbeat"
-  version: "6.2.0"
   config_include_dir: "/etc/auditbeat/"
   install_only: false
   install_repo: true
   skip_restart: false
-  
+
   # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-general-options.html
   name: "auditbeat"
   tags: ["demo"]
@@ -17,7 +16,7 @@ auditbeat_defaults:
   fields_under_root: false
   max_procs: "1"
   max_start_delay: "10s"
-  
+
   # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuring-internal-queue.html
   queue:
     mem:
@@ -25,7 +24,7 @@ auditbeat_defaults:
       flush:
         min_events: 2048
         timeout: "1s"
-      
+
   path:
     home: "/usr/share/auditbeat"
     config: "/etc/auditbeat"
@@ -59,10 +58,10 @@ auditbeat_defaults:
         ## because this might be a sign of someone exploiting a hole in the 32
         ## bit API.
         - a always,exit -F arch=b32 -S all -F key=32bit-abi
-    
+
         ## Executions.
         - a always,exit -F arch=b64 -S execve,execveat -k exec
-    
+
         # Log all executed processes
         - a always,exit -S execve
 
@@ -72,7 +71,7 @@ auditbeat_defaults:
         - w /etc/gshadow -p wa -k identity
         - w /etc/shadow -p wa -k identity
         - w /etc/security/opasswd -p wa -k identity
-    
+
         ## Unauthorized access attempts.
         - a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EACCES -k access
         - a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EPERM -k access
@@ -84,7 +83,7 @@ auditbeat_defaults:
         ## The purpose of this rule is to detect when an admin may be abusing power
         ## by looking in user's home dir.
         - a always,exit -F dir=/home -F uid=0 -F auid>=1000 -F auid!=4294967295 -C auid!=obj_uid -F key=power-abuse
-    
+
         ## All elevation of privileges is logged
         - a always,exit -F arch=b64 -S setuid -F a0=0 -F exe=/usr/bin/su -F key=elevated-privs
         - a always,exit -F arch=b32 -S setuid -F a0=0 -F exe=/usr/bin/su -F key=elevated-privs
@@ -92,7 +91,7 @@ auditbeat_defaults:
         - a always,exit -F arch=b32 -S setresuid -F a0=0 -F exe=/usr/bin/sudo -F key=elevated-privs
         - a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -F key=elevated-privs
         - a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -F key=elevated-privs
-        
+
     # https://www.elastic.co/guide/en/beats/auditbeat/6.2/auditbeat-module-file_integrity.html
     file_integrity:
       paths:
@@ -137,7 +136,7 @@ auditbeat_defaults:
       bulk_max_size: 50
       timeout: 90
       ssl: []
-    
+
     # https://www.elastic.co/guide/en/beats/auditbeat/6.2/logstash-output.html
     logstash:
       enabled: false
@@ -228,7 +227,7 @@ auditbeat_defaults:
       usernamee: ""
       password: ""
       path: ""
-  
+
   # https://www.elastic.co/guide/en/beats/auditbeat/6.2/configuration-monitor.html
   xpack:
     monitoring: []
