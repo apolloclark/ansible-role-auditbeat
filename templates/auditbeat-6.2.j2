@@ -1,4 +1,5 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
+---
 ########################## Auditbeat Configuration #############################
 
 # This is a reference configuration file documenting all non-deprecated options
@@ -10,7 +11,7 @@
 
 
 
-#================================ General ======================================
+# ================================ General ======================================
 
 {% if 'name' in auditbeat_combined %}
 # The name of the shipper that publishes the network data. It can be used to group
@@ -148,7 +149,7 @@ config:
 
     {% if 'reload' in auditbeat_combined.config.modules %}
     reload:
-      
+
       {% if 'period' in auditbeat_combined.config.modules.reload %}
       # Period on which files under path should be checked for changes
       period: {{ auditbeat_combined.config.modules.reload.period }}
@@ -166,7 +167,7 @@ config:
 
 #==========================  Modules configuration =============================
 auditbeat.modules:
-  
+
 {% if 'auditd' in auditbeat_combined.modules %}
 #----------------------------- Auditd module -----------------------------------
 #
@@ -222,8 +223,8 @@ auditbeat.modules:
     - {{ item }}
   {% endfor %}
   {% endif %}
-  
-  {% if 'exclude_files' in auditbeat_combined.modules.file_integrity and 
+
+  {% if 'exclude_files' in auditbeat_combined.modules.file_integrity and
          auditbeat_combined.modules.file_integrity.exclude_files %}
   # List of regular expressions to filter out notifications for unwanted files.
   # Wrap in single quotes to workaround YAML escaping rules. By default no files
@@ -359,14 +360,14 @@ auditbeat.modules:
 #
 # Configure what output to use when sending the data collected by the beat.
 #
-{% if 'elasticsearch' in auditbeat_combined.output and 
+{% if 'elasticsearch' in auditbeat_combined.output and
    auditbeat_combined.output.elasticsearch %}
 #-------------------------- Elasticsearch output -------------------------------
 #
 # https://www.elastic.co/guide/en/beats/auditbeat/6.2/elasticsearch-output.html
 #
 output.elasticsearch:
-  
+
   {% if 'enabled' in auditbeat_combined.output.elasticsearch %}
   # Boolean flag to enable or disable the output module.
   enabled: {{ auditbeat_combined.output.elasticsearch.enabled }}
@@ -393,17 +394,17 @@ output.elasticsearch:
   protocol: "{{ auditbeat_combined.output.elasticsearch.protocol }}"
   {% endif %}
 
-  {% if 'username' in auditbeat_combined.output.elasticsearch and 
+  {% if 'username' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.username %}
   username: "{{ auditbeat_combined.output.elasticsearch.username }}"
   {% endif %}
 
-  {% if 'password' in auditbeat_combined.output.elasticsearch and 
+  {% if 'password' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.password %}
   password: "{{ auditbeat_combined.output.elasticsearch.password }}"
   {% endif %}
 
-  {% if 'parameters' in auditbeat_combined.output.elasticsearch and 
+  {% if 'parameters' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.parameters %}
   # Dictionary of HTTP parameters to pass within the url with index operations.
   parameters:
@@ -415,7 +416,7 @@ output.elasticsearch:
   worker: {{ auditbeat_combined.output.elasticsearch.worker }}
   {% endif %}
 
-  {% if 'index' in auditbeat_combined.output.elasticsearch and 
+  {% if 'index' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.index %}
   # Optional index name. The default is "beat-index-prefix" plus date
   # and generates [beat-index-prefix-]YYYY.MM.DD keys.
@@ -423,7 +424,7 @@ output.elasticsearch:
   index: "{{ auditbeat_combined.output.elasticsearch.index }}"
   {% endif %}
 
-  {% if 'indices' in auditbeat_combined.output.elasticsearch and 
+  {% if 'indices' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.indices %}
   # Array of hosts to connect to.
   # Scheme and port can be left out and will be set to the default (http and 9200)
@@ -435,32 +436,32 @@ output.elasticsearch:
   {% endfor %}
   {% endif %}
 
-  {% if 'pipeline' in auditbeat_combined.output.elasticsearch and 
+  {% if 'pipeline' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.pipeline %}
   # Optional ingest node pipeline. By default no pipeline will be used.
   pipeline: "{{ auditbeat_combined.output.elasticsearch.pipeline }}"
   {% endif %}
 
-  {% if 'pipelines' in auditbeat_combined.output.elasticsearch and 
+  {% if 'pipelines' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.pipelines %}
   # Optional ingest node pipeline. By default no pipeline will be used.
   pipelines: "{{ auditbeat_combined.output.elasticsearch.pipelines }}"
   {% endif %}
 
-  {% if 'path' in auditbeat_combined.output.elasticsearch and 
+  {% if 'path' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.path %}
   # Optional HTTP Path
   path: "{{ auditbeat_combined.output.elasticsearch.path }}"
   {% endif %}
 
-  {% if 'headers' in auditbeat_combined.output.elasticsearch and 
+  {% if 'headers' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.headers %}
   # Custom HTTP headers to add to each request
   headers:
     - X-My-Header: Contents of the header
   {% endif %}
 
-  {% if 'proxy_url' in auditbeat_combined.output.elasticsearch and 
+  {% if 'proxy_url' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.proxy_url %}
   # Proxy server url
   proxy_url: "{{ auditbeat_combined.output.elasticsearch.proxy_url }}"
@@ -484,7 +485,7 @@ output.elasticsearch:
   timeout: {{ auditbeat_combined.output.elasticsearch.timeout }}
   {% endif %}
 
-  {% if 'ssl' in auditbeat_combined.output.elasticsearch and 
+  {% if 'ssl' in auditbeat_combined.output.elasticsearch and
          auditbeat_combined.output.elasticsearch.ssl %}
   # Use SSL settings for HTTPS.
   #ssl:
@@ -499,46 +500,46 @@ output.elasticsearch:
     # List of supported/valid TLS versions. By default all TLS versions 1.0 up to
     # 1.2 are enabled.
     #supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
-  
+
     # SSL configuration. By default is off.
     # List of root certificates for HTTPS server verifications
     #certificate_authorities: ["/etc/pki/root/ca.pem"]
-  
+
     # Certificate for SSL client authentication
     #certificate: "/etc/pki/client/cert.pem"
-  
+
     # Client Certificate Key
     #key: "/etc/pki/client/cert.key"
-  
+
     # Optional passphrase for decrypting the Certificate Key.
     #key_passphrase: ''
-  
+
     # Configure cipher suites to be used for SSL connections
     #cipher_suites: []
-  
+
     # Configure curve types for ECDHE based cipher suites
     #curve_types: []
-  
+
     # Configure what types of renegotiation are supported. Valid options are
     # never, once, and freely. Default is never.
     #renegotiation: never
   {% endif %}
 {% endif %}
 
-{% if 'logstash' in auditbeat_combined.output and 
+{% if 'logstash' in auditbeat_combined.output and
    auditbeat_combined.output.logstash %}
 #----------------------------- Logstash output ---------------------------------
 #
 # https://www.elastic.co/guide/en/beats/auditbeat/6.2/logstash-output.html
 #
 output.logstash:
-  
+
   {% if 'enabled' in auditbeat_combined.output.logstash %}
   # Boolean flag to enable or disable the output module.
   enabled: {{ auditbeat_combined.output.logstash.enabled }}
   {% endif %}
 
-  {% if 'hosts' in auditbeat_combined.output.logstash and 
+  {% if 'hosts' in auditbeat_combined.output.logstash and
          auditbeat_combined.output.logstash.hosts %}
   # The Logstash hosts
   hosts:
@@ -547,19 +548,19 @@ output.logstash:
   {% endfor %}
   {% endif %}
 
-  {% if 'worker' in auditbeat_combined.output.logstash and 
+  {% if 'worker' in auditbeat_combined.output.logstash and
          auditbeat_combined.output.logstash.worker %}
   # Number of workers per Logstash host.
   worker: {{ auditbeat_combined.output.logstash.worker }}
   {% endif %}
 
-  {% if 'compression_level' in auditbeat_combined.output.logstash and 
+  {% if 'compression_level' in auditbeat_combined.output.logstash and
          auditbeat_combined.output.logstash.compression_level %}
   # Set gzip compression level.
   compression_level: {{ auditbeat_combined.output.logstash.compression_level }}
   {% endif %}
 
-  {% if 'ttl' in auditbeat_combined.output.logstash and 
+  {% if 'ttl' in auditbeat_combined.output.logstash and
          auditbeat_combined.output.logstash.ttl %}
   # Optional maximum time to live for a connection to Logstash, after which the
   # connection will be re-established.  A value of `0s` (the default) will
@@ -574,7 +575,7 @@ output.logstash:
   loadbalance: {{ auditbeat_combined.output.logstash.loadbalance }}
   {% endif %}
 
-  {% if 'pipelining' in auditbeat_combined.output.logstash and 
+  {% if 'pipelining' in auditbeat_combined.output.logstash and
          auditbeat_combined.output.logstash.pipelining %}
   # Number of batches to be sent asynchronously to logstash while processing
   # new batches.
@@ -588,14 +589,14 @@ output.logstash:
   slow_start: {{ auditbeat_combined.output.logstash.slow_start }}
   {% endif %}
 
-  {% if 'index' in auditbeat_combined.output.logstash and 
+  {% if 'index' in auditbeat_combined.output.logstash and
          auditbeat_combined.output.logstash.index %}
   # Optional index name. The default index name is set to beat-index-prefix
   # in all lowercase.
   index: "{{ auditbeat_combined.output.logstash.index }}"
   {% endif %}
 
-  {% if 'proxy_url' in auditbeat_combined.output.logstash and 
+  {% if 'proxy_url' in auditbeat_combined.output.logstash and
          auditbeat_combined.output.logstash.proxy_url %}
   # SOCKS5 proxy server URL
   proxy_url: "{{ auditbeat_combined.output.logstash.proxy_url }}"
@@ -606,7 +607,7 @@ output.logstash:
   proxy_use_local_resolver: {{ auditbeat_combined.output.logstash.proxy_use_local_resolver }}
   {% endif %}
 
-  {% if 'ssl' in auditbeat_combined.output.logstash and 
+  {% if 'ssl' in auditbeat_combined.output.logstash and
          auditbeat_combined.output.logstash.ssl %}
   # Enable SSL support. SSL is automatically enabled, if any SSL setting is set.
   #ssl:
@@ -617,30 +618,30 @@ output.logstash:
     # susceptible to man-in-the-middle attacks. Use only for testing. Default is
     # `full`.
     #verification_mode: full
-  
+
     # List of supported/valid TLS versions. By default all TLS versions 1.0 up to
     # 1.2 are enabled.
     #supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
-  
+
     # Optional SSL configuration options. SSL is off by default.
     # List of root certificates for HTTPS server verifications
     #certificate_authorities: ["/etc/pki/root/ca.pem"]
-  
+
     # Certificate for SSL client authentication
     #certificate: "/etc/pki/client/cert.pem"
-  
+
     # Client Certificate Key
     #key: "/etc/pki/client/cert.key"
-  
+
     # Optional passphrase for decrypting the Certificate Key.
     #key_passphrase: ''
-  
+
     # Configure cipher suites to be used for SSL connections
     #cipher_suites: []
-  
+
     # Configure curve types for ECDHE based cipher suites
     #curve_types: []
-  
+
     # Configure what types of renegotiation are supported. Valid options are
     # never, once, and freely. Default is never.
     #renegotiation: never
@@ -658,7 +659,7 @@ output.kafka:
   enabled: {{ auditbeat_combined.output.kafka.enabled }}
   {% endif %}
 
-  {% if 'hosts' in auditbeat_combined.output.kafka and 
+  {% if 'hosts' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.hosts %}
   # The list of Kafka broker addresses from where to fetch the cluster metadata.
   # The cluster metadata contain the actual Kafka brokers events are published
@@ -669,28 +670,28 @@ output.kafka:
   {% endfor %}
   {% endif %}
 
-  {% if 'topic' in auditbeat_combined.output.kafka and 
+  {% if 'topic' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.topic %}
   # The Kafka topic used for produced events. The setting can be a format string
   # using any event field. To set the topic from document type use `%{[type]}`.
   topic: '{{ auditbeat_combined.output.kafka.topic }}'
   {% endif %}
 
-  {% if 'key' in auditbeat_combined.output.kafka and 
+  {% if 'key' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.key %}
   # The Kafka event key setting. Use format string to create unique event key.
   # By default no event key will be generated.
   key: '{{ auditbeat_combined.output.kafka.key }}'
   {% endif %}
 
-  {% if 'partition' in auditbeat_combined.output.kafka and 
+  {% if 'partition' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.partition %}
   # The Kafka event partitioning strategy. Default hashing strategy is `hash`
   # using the `output.kafka.key` setting or randomly distributes events if
   # `output.kafka.key` is not configured.
   partition:
 
-    {% if 'hash' in auditbeat_combined.output.kafka.partition and 
+    {% if 'hash' in auditbeat_combined.output.kafka.partition and
        auditbeat_combined.output.kafka.partition.hash %}
     hash:
 
@@ -699,8 +700,8 @@ output.kafka:
       # leaders. Default is false.
       reachable_only: {{ auditbeat_combined.output.kafka.partition.hash.reachable_only }}
       {% endif %}
-  
-      {% if 'key' in auditbeat_combined.output.kafka.partition.hash and 
+
+      {% if 'key' in auditbeat_combined.output.kafka.partition.hash and
          auditbeat_combined.output.kafka.partition.hash.hash %}
       # Configure alternative event field names used to compute the hash value.
       # If empty `output.kafka.key` setting will be used.
@@ -711,60 +712,60 @@ output.kafka:
   {% endif %}
 
   # Authentication details. Password is required if username is set.
-  {% if 'username' in auditbeat_combined.output.kafka and 
+  {% if 'username' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.username %}
   username: '{{ auditbeat_combined.output.kafka.username }}'
   {% endif %}
 
-  {% if 'password' in auditbeat_combined.output.kafka and 
+  {% if 'password' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.password %}
   password: '{{ auditbeat_combined.output.kafka.password }}'
   {% endif %}
 
-  {% if 'version' in auditbeat_combined.output.kafka and 
+  {% if 'version' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.version %}
   # Kafka version beatname is assumed to run against. Defaults to the oldest
   # supported stable version (currently version 0.8.2.0)
   version: {{ auditbeat_combined.output.kafka.version }}
   {% endif %}
 
-  {% if 'metadata' in auditbeat_combined.output.kafka and 
+  {% if 'metadata' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.metadata %}
   # Metadata update configuration. Metadata do contain leader information
   # deciding which broker to use when publishing.
   metadata:
 
-    {% if 'retry' in auditbeat_combined.output.kafka.metadata and 
+    {% if 'retry' in auditbeat_combined.output.kafka.metadata and
        auditbeat_combined.output.kafka.metadata.retry %}
     retry:
-      {% if 'max' in auditbeat_combined.output.kafka.metadata.retry and 
+      {% if 'max' in auditbeat_combined.output.kafka.metadata.retry and
          auditbeat_combined.output.kafka.metadata.retry.max %}
       # Max metadata request retry attempts when cluster is in middle of leader
       # election. Defaults to 3 retries.
       max: {{ auditbeat_combined.output.kafka.metadata.retry.max }}
       {% endif %}
 
-      {% if 'backoff' in auditbeat_combined.output.kafka.metadata.retry and 
+      {% if 'backoff' in auditbeat_combined.output.kafka.metadata.retry and
          auditbeat_combined.output.kafka.metadata.retry.backoff %}
       # Waiting time between retries during leader elections. Default is 250ms.
       backoff: {{ auditbeat_combined.output.kafka.metadata.retry.backoff }}
       {% endif %}
     {% endif %}
-  
-    {% if 'refresh_frequency' in auditbeat_combined.output.kafka.metadata.retry and 
+
+    {% if 'refresh_frequency' in auditbeat_combined.output.kafka.metadata.retry and
        auditbeat_combined.output.kafka.metadata.retry.refresh_frequency %}
     # Refresh metadata interval. Defaults to every 10 minutes.
     refresh_frequency: {{ auditbeat_combined.output.kafka.metadata.retry.refresh_frequency }}
     {% endif %}
   {% endif %}
 
-  {% if 'worker' in auditbeat_combined.output.kafka and 
+  {% if 'worker' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.worker %}
   # The number of concurrent load-balanced Kafka output workers.
   worker: {{ auditbeat_combined.output.kafka.worker }}
   {% endif %}
 
-  {% if 'max_retries' in auditbeat_combined.output.kafka and 
+  {% if 'max_retries' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.max_retries %}
   # The number of times to retry publishing an event after a publishing failure.
   # After the specified number of retries, the events are typically dropped.
@@ -774,48 +775,48 @@ output.kafka:
   max_retries: {{ auditbeat_combined.output.kafka.max_retries }}
   {% endif %}
 
-  {% if 'bulk_max_size' in auditbeat_combined.output.kafka and 
+  {% if 'bulk_max_size' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.bulk_max_size %}
   # The maximum number of events to bulk in a single Kafka request. The default
   # is 2048.
   bulk_max_size: {{ auditbeat_combined.output.kafka.bulk_max_size }}
   {% endif %}
 
-  {% if 'timeout' in auditbeat_combined.output.kafka and 
+  {% if 'timeout' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.timeout %}
   # The number of seconds to wait for responses from the Kafka brokers before
   # timing out. The default is 30s.
   timeout: {{ auditbeat_combined.output.kafka.timeout }}
   {% endif %}
 
-  {% if 'broker_timeout' in auditbeat_combined.output.kafka and 
+  {% if 'broker_timeout' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.broker_timeout %}
   # The maximum duration a broker will wait for number of required ACKs. The
   # default is 10s.
   broker_timeout: {{ auditbeat_combined.output.kafka.broker_timeout }}
   {% endif %}
 
-  {% if 'channel_buffer_size' in auditbeat_combined.output.kafka and 
+  {% if 'channel_buffer_size' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.channel_buffer_size %}
   # The number of messages buffered for each Kafka broker. The default is 256.
   channel_buffer_size: {{ auditbeat_combined.output.kafka.channel_buffer_size }}
   {% endif %}
 
-  {% if 'keep_alive' in auditbeat_combined.output.kafka and 
+  {% if 'keep_alive' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.keep_alive %}
   # The keep-alive period for an active network connection. If 0s, keep-alives
   # are disabled. The default is 0 seconds.
   keep_alive: {{ auditbeat_combined.output.kafka.keep_alive }}
   {% endif %}
 
-  {% if 'compression' in auditbeat_combined.output.kafka and 
+  {% if 'compression' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.compression %}
   # Sets the output compression codec. Must be one of none, snappy and gzip. The
   # default is gzip.
   compression: {{ auditbeat_combined.output.kafka.compression }}
   {% endif %}
 
-  {% if 'max_message_bytes' in auditbeat_combined.output.kafka and 
+  {% if 'max_message_bytes' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.max_message_bytes %}
   # The maximum permitted size of JSON-encoded messages. Bigger messages will be
   # dropped. The default value is 1000000 (bytes). This value should be equal to
@@ -823,7 +824,7 @@ output.kafka:
   max_message_bytes: {{ auditbeat_combined.output.kafka.max_message_bytes }}
   {% endif %}
 
-  {% if 'required_acks' in auditbeat_combined.output.kafka and 
+  {% if 'required_acks' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.required_acks %}
   # The ACK reliability level required from broker. 0=no response, 1=wait for
   # local commit, -1=wait for all replicas to commit. The default is 1.  Note:
@@ -832,48 +833,48 @@ output.kafka:
   required_acks: {{ auditbeat_combined.output.kafka.required_acks }}
   {% endif %}
 
-  {% if 'client_id' in auditbeat_combined.output.kafka and 
+  {% if 'client_id' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.client_id %}
   # The configurable ClientID used for logging, debugging, and auditing
   # purposes.  The default is "beats".
   client_id: "{{ auditbeat_combined.output.kafka.client_id }}"
   {% endif %}
 
-  {% if 'ssl' in auditbeat_combined.output.kafka and 
+  {% if 'ssl' in auditbeat_combined.output.kafka and
      auditbeat_combined.output.kafka.ssl %}
   # Enable SSL support. SSL is automatically enabled, if any SSL setting is set.
   #ssl:
     #enabled: true
-  
+
     # Optional SSL configuration options. SSL is off by default.
     # List of root certificates for HTTPS server verifications
     #certificate_authorities: ["/etc/pki/root/ca.pem"]
-  
+
     # Configure SSL verification mode. If `none` is configured, all server hosts
     # and certificates will be accepted. In this mode, SSL based connections are
     # susceptible to man-in-the-middle attacks. Use only for testing. Default is
     # `full`.
     #verification_mode: full
-  
+
     # List of supported/valid TLS versions. By default all TLS versions 1.0 up to
     # 1.2 are enabled.
     #supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
-  
+
     # Certificate for SSL client authentication
     #certificate: "/etc/pki/client/cert.pem"
-  
+
     # Client Certificate Key
     #key: "/etc/pki/client/cert.key"
-  
+
     # Optional passphrase for decrypting the Certificate Key.
     #key_passphrase: ''
-  
+
     # Configure cipher suites to be used for SSL connections
     #cipher_suites: []
-  
+
     # Configure curve types for ECDHE based cipher suites
     #curve_types: []
-  
+
     # Configure what types of renegotiation are supported. Valid options are
     # never, once, and freely. Default is never.
     #renegotiation: never
@@ -948,36 +949,36 @@ output.kafka:
   # Enable SSL support. SSL is automatically enabled, if any SSL setting is set.
   #ssl:
     #enabled: false
-  
+
     # Configure SSL verification mode. If `none` is configured, all server hosts
     # and certificates will be accepted. In this mode, SSL based connections are
     # susceptible to man-in-the-middle attacks. Use only for testing. Default is
     # `full`.
     #verification_mode: full
-  
+
     # List of supported/valid TLS versions. By default all TLS versions 1.0 up to
     # 1.2 are enabled.
     #supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
-  
+
     # Optional SSL configuration options. SSL is off by default.
     # List of root certificates for HTTPS server verifications
     #certificate_authorities: ["/etc/pki/root/ca.pem"]
-  
+
     # Certificate for SSL client authentication
     #certificate: "/etc/pki/client/cert.pem"
-  
+
     # Client Certificate Key
     #key: "/etc/pki/client/cert.key"
-  
+
     # Optional passphrase for decrypting the Certificate Key.
     #key_passphrase: ''
-  
+
     # Configure cipher suites to be used for SSL connections
     #cipher_suites: []
-  
+
     # Configure curve types for ECDHE based cipher suites
     #curve_types: []
-  
+
     # Configure what types of renegotiation are supported. Valid options are
     # never, once, and freely. Default is never.
     #renegotiation: never
@@ -1018,7 +1019,7 @@ output.kafka:
 
 
 
-{% if 'dashboards' in auditbeat_combined.setup and 
+{% if 'dashboards' in auditbeat_combined.setup and
    auditbeat_combined.setup.dashboards %}
 #============================== Dashboards =====================================
 #
@@ -1033,28 +1034,28 @@ setup.dashboards:
   enabled: {{ auditbeat_combined.setup.dashboards.enabled }}
   {% endif %}
 
-  {% if 'directory' in auditbeat_combined.setup.dashboards and 
+  {% if 'directory' in auditbeat_combined.setup.dashboards and
          auditbeat_combined.setup.dashboards.directory %}
   # The directory from where to read the dashboards. The default is the `kibana`
   # folder in the home path.
   directory: {{ auditbeat_combined.setup.dashboards.directory }}
   {% endif %}
 
-  {% if 'url' in auditbeat_combined.setup.dashboards and 
+  {% if 'url' in auditbeat_combined.setup.dashboards and
          auditbeat_combined.setup.dashboards.url %}
   # The URL from where to download the dashboards archive. It is used instead of
   # the directory if it has a value.
   url: "{{ auditbeat_combined.setup.dashboards.url }}"
   {% endif %}
 
-  {% if 'file' in auditbeat_combined.setup.dashboards and 
+  {% if 'file' in auditbeat_combined.setup.dashboards and
         auditbeat_combined.setup.dashboards.file %}
   # The  file archive (zip file) from where to read the dashboards. It is used instead
   # of the directory when it has a value.
   file: "{{ auditbeat_combined.setup.dashboards.file }}"
   {% endif %}
 
-  {% if 'beat' in auditbeat_combined.setup.dashboards and 
+  {% if 'beat' in auditbeat_combined.setup.dashboards and
       auditbeat_combined.setup.dashboards.beat %}
   # In case the archive contains the dashboards from multiple Beats, this lets you
   # select which one to load. You can load all the dashboards in the archive by
@@ -1062,13 +1063,13 @@ setup.dashboards:
   beat: "{{ auditbeat_combined.setup.dashboards.beat }}"
   {% endif %}
 
-  {% if 'kibana_index' in auditbeat_combined.setup.dashboards and 
+  {% if 'kibana_index' in auditbeat_combined.setup.dashboards and
          auditbeat_combined.setup.dashboards.kibana_index %}
   # The name of the Kibana index to use for setting the configuration. Default is ".kibana"
   kibana_index: "{{ auditbeat_combined.setup.dashboards.kibana_index }}"
   {% endif %}
 
-  {% if 'index' in auditbeat_combined.setup.dashboards and 
+  {% if 'index' in auditbeat_combined.setup.dashboards and
          auditbeat_combined.setup.dashboards.index %}
   # The Elasticsearch index name. This overwrites the index name defined in the
   # dashboards and index pattern. Example: testbeat-*
@@ -1129,7 +1130,7 @@ setup.dashboards:
 
 
 
-{% if 'kibana' in auditbeat_combined.setup and 
+{% if 'kibana' in auditbeat_combined.setup and
    auditbeat_combined.setup.kibana %}
 #============================== Kibana =====================================
 
@@ -1137,7 +1138,7 @@ setup.dashboards:
 # This requires a Kibana endpoint configuration.
 setup.kibana:
 
-  {% if 'host' in auditbeat_combined.setup.kibana and 
+  {% if 'host' in auditbeat_combined.setup.kibana and
          auditbeat_combined.setup.kibana.host %}
   # Kibana Host
   # Scheme and port can be left out and will be set to the default (http and 5601)
@@ -1146,29 +1147,29 @@ setup.kibana:
   host: "{{ auditbeat_combined.setup.kibana.host }}"
   {% endif %}
 
-  {% if 'protocol' in auditbeat_combined.setup.kibana and 
+  {% if 'protocol' in auditbeat_combined.setup.kibana and
          auditbeat_combined.setup.kibana.protocol %}
   # Optional protocol and basic auth credentials.
   protocol: "{{ auditbeat_combined.setup.kibana.protocol }}"
   {% endif %}
 
-  {% if 'username' in auditbeat_combined.setup.kibana and 
+  {% if 'username' in auditbeat_combined.setup.kibana and
          auditbeat_combined.setup.kibana.username %}
   username: "{{ auditbeat_combined.setup.kibana.username }}"
   {% endif %}
 
-  {% if 'password' in auditbeat_combined.setup.kibana and 
+  {% if 'password' in auditbeat_combined.setup.kibana and
          auditbeat_combined.setup.kibana.password %}
   password: "{{ auditbeat_combined.setup.kibana.password }}"
   {% endif %}
 
-  {% if 'path' in auditbeat_combined.setup.kibana and 
+  {% if 'path' in auditbeat_combined.setup.kibana and
          auditbeat_combined.setup.kibana.path %}
   # Optional HTTP Path
   path: "{{ auditbeat_combined.setup.kibana.path }}"
   {% endif %}
 
-  {% if 'ssl' in auditbeat_combined.setup.kibana and 
+  {% if 'ssl' in auditbeat_combined.setup.kibana and
          auditbeat_combined.setup.kibana.ssl %}
   # Use SSL settings for HTTPS. Default is true.
   #ssl:
@@ -1179,27 +1180,27 @@ setup.kibana:
     # susceptible to man-in-the-middle attacks. Use only for testing. Default is
     # `full`.
     #verification_mode: full
-  
+
     # List of supported/valid TLS versions. By default all TLS versions 1.0 up to
     # 1.2 are enabled.
     #supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
-  
+
     # SSL configuration. By default is off.
     # List of root certificates for HTTPS server verifications
     #certificate_authorities: ["/etc/pki/root/ca.pem"]
-  
+
     # Certificate for SSL client authentication
     #certificate: "/etc/pki/client/cert.pem"
-  
+
     # Client Certificate Key
     #key: "/etc/pki/client/cert.key"
-  
+
     # Optional passphrase for decrypting the Certificate Key.
     #key_passphrase: ''
-  
+
     # Configure cipher suites to be used for SSL connections
     #cipher_suites: []
-  
+
     # Configure curve types for ECDHE based cipher suites
     #curve_types: []
   {% endif %}
@@ -1207,21 +1208,21 @@ setup.kibana:
 
 
 
-{% if 'logging' in auditbeat_combined and 
+{% if 'logging' in auditbeat_combined and
    auditbeat_combined.logging %}
 #================================ Logging ======================================
 # There are four options for the log output: file, stderr, syslog, eventlog
 # The file output is the default.
 logging:
 
-  {% if 'level' in auditbeat_combined.logging and 
+  {% if 'level' in auditbeat_combined.logging and
          auditbeat_combined.logging.level %}
   # Sets log level. The default log level is info.
   # Available log levels are: error, warning, info, debug
   level: "{{ auditbeat_combined.logging.level }}"
   {% endif %}
 
-  {% if 'selectors' in auditbeat_combined.logging and 
+  {% if 'selectors' in auditbeat_combined.logging and
          auditbeat_combined.logging.selectors %}
   # Enable debug output for selected components. To enable all selectors use ["*"]
   # Other available selectors are "beat", "publish", "service"
@@ -1239,7 +1240,7 @@ logging:
   to_eventlog: {{ auditbeat_combined.logging.to_eventlog }}
   {% endif %}
 
-  {% if 'metrics' in auditbeat_combined.logging and 
+  {% if 'metrics' in auditbeat_combined.logging and
          auditbeat_combined.logging.metrics %}
   # If enabled, beatname periodically logs its internal metrics that have changed
   # in the last period. For each metric that changed, the delta from the value at
@@ -1251,50 +1252,50 @@ logging:
     enabled: {{ auditbeat_combined.logging.metrics.enabled }}
     {% endif %}
 
-    {% if 'period' in auditbeat_combined.logging.metrics and 
+    {% if 'period' in auditbeat_combined.logging.metrics and
            auditbeat_combined.logging.metrics.period %}
     # The period after which to log the internal metrics. The default is 30s.
     period: {{ auditbeat_combined.logging.metrics.period }}
     {% endif %}
   {% endif %}
-  
+
   {% if 'to_files' in auditbeat_combined.logging %}
   # Logging to rotating files. Set to_files to false to disable logging to
   # files.
   to_files: {{ auditbeat_combined.logging.to_files }}
   {% endif %}
-  
-  {% if 'files' in auditbeat_combined.logging and 
+
+  {% if 'files' in auditbeat_combined.logging and
          auditbeat_combined.logging.files %}
   files:
 
-    {% if 'path' in auditbeat_combined.logging.files and 
+    {% if 'path' in auditbeat_combined.logging.files and
        auditbeat_combined.logging.files.path %}
     # Configure the path where the logs are written. The default is the logs directory
     # under the home path (the binary location).
     path: {{ auditbeat_combined.logging.files.path }}
     {% endif %}
-  
-    {% if 'name' in auditbeat_combined.logging.files and 
+
+    {% if 'name' in auditbeat_combined.logging.files and
        auditbeat_combined.logging.files.name %}
     # The name of the files where the logs are written to.
     name: "{{ auditbeat_combined.logging.files.name }}"
     {% endif %}
-  
-    {% if 'rotateeverybytes' in auditbeat_combined.logging.files and 
+
+    {% if 'rotateeverybytes' in auditbeat_combined.logging.files and
        auditbeat_combined.logging.files.rotateeverybytes %}
     # Configure log file size limit. If limit is reached, log file will be
     # automatically rotated
     rotateeverybytes: {{ auditbeat_combined.logging.files.rotateeverybytes }}
     {% endif %}
-  
-    {% if 'keepfiles' in auditbeat_combined.logging.files and 
+
+    {% if 'keepfiles' in auditbeat_combined.logging.files and
        auditbeat_combined.logging.files.keepfiles %}
     # Number of rotated log files to keep. Oldest files will be deleted first.
     keepfiles: {{ auditbeat_combined.logging.files.keepfiles }}
     {% endif %}
-  
-    {% if 'permissions' in auditbeat_combined.logging.files and 
+
+    {% if 'permissions' in auditbeat_combined.logging.files and
        auditbeat_combined.logging.files.permissions %}
     # The permissions mask to apply when rotating log files. The default value is 0600.
     # Must be a valid Unix-style file permissions mask expressed in octal notation.
@@ -1375,30 +1376,30 @@ logging:
     # susceptible to man-in-the-middle attacks. Use only for testing. Default is
     # `full`.
     #verification_mode: full
-  
+
     # List of supported/valid TLS versions. By default all TLS versions 1.0 up to
     # 1.2 are enabled.
     #supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
-  
+
     # SSL configuration. By default is off.
     # List of root certificates for HTTPS server verifications
     #certificate_authorities: ["/etc/pki/root/ca.pem"]
-  
+
     # Certificate for SSL client authentication
     #certificate: "/etc/pki/client/cert.pem"
-  
+
     # Client Certificate Key
     #key: "/etc/pki/client/cert.key"
-  
+
     # Optional passphrase for decrypting the Certificate Key.
     #key_passphrase: ''
-  
+
     # Configure cipher suites to be used for SSL connections
     #cipher_suites: []
-  
+
     # Configure curve types for ECDHE based cipher suites
     #curve_types: []
-  
+
     # Configure what types of renegotiation are supported. Valid options are
     # never, once, and freely. Default is never.
     #renegotiation: never

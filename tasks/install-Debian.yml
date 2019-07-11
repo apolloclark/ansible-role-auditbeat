@@ -1,0 +1,33 @@
+---
+
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+# http://docs.ansible.com/ansible/latest/apt_key_module.html
+- name: Debian, Add repository key
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    id: "46095ACC8548582C1A2699A9D27D666CD88E42B4"
+    state: present
+  when:
+    - auditbeat_combined.install_repo
+
+# http://docs.ansible.com/ansible/latest/apt_repository_module.html
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+- name: Debian, Add Elastic 6.x repo (if choosing a 6.x version)
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
+    state: present
+  when:
+    - auditbeat_combined.version is version('6', '>=')
+    - auditbeat_combined.version is version('7', '<')
+    - auditbeat_combined.install_repo
+
+# https://docs.ansible.com/ansible/latest/modules/apt_module.html
+- name: Debian, Install from repo (if choosing the 5.6.x or 6.x version)
+  apt:
+    name: "auditbeat={{ auditbeat_combined.version }}"
+    update_cache: yes
+    state: present
+  when:
+    - auditbeat_combined.version is version('6', '>=')
+    - auditbeat_combined.version is version('7', '<')
+    - auditbeat_combined.install_repo

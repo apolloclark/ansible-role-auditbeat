@@ -11,7 +11,7 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-      - xenial
+        - xenial
   galaxy_tags:
     - monitoring
     - metrics
