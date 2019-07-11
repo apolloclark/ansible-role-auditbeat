@@ -1,0 +1,30 @@
+---
+language: python
+python: "2.7.15"
+sudo: required
+
+services:
+  - docker
+
+install:
+  - pip install pipenv
+  - pipenv install -r test-requirements.txt --python 2.7
+env:
+  matrix:
+    # CentOS 7
+    - DOCKER_IMAGE_BASE=centos:7.6.1810
+
+    # Ubuntu Bionic
+    - DOCKER_IMAGE_BASE=ubuntu:bionic
+
+    # Ubuntu Xenial
+    - DOCKER_IMAGE_BASE=ubuntu:xenial
+
+    # Debian Stretch
+    - DOCKER_IMAGE_BASE=debian:stretch
+
+    # Debian Jessie
+    - DOCKER_IMAGE_BASE=debian:jessie
+
+script:
+  - pipenv run molecule test --all
