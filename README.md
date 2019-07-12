@@ -1,6 +1,7 @@
 # Ansible Role: auditbeat
 
-Ansible Role to install and configure Elastic auditbeat for Ubuntu.
+Ansible Role to install and configure Elastic auditbeat for Ubuntu 18.04 Bionic, Ubuntu 16.04 Xenial, Debian 9 Stretch,
+Debian 8 Jessie, Centos 7.
 
 
 ## Requirements
@@ -9,11 +10,11 @@ None.
 
 ## Role Variables
 
-Available variables are listed below, along with default values (see `defaults/main.yml`).
+Available variables are listed below, along with default values (see `vars/main-7.2.yml`).
 You can overload the variables by creating a dictionary called "auditbeat", ex:
 
     auditbeat:
-      version: 6.6.2
+      version: 7.2.0
 
 ## Dependencies
 
