@@ -28,32 +28,31 @@ None.
 ## Testing
 
 ```sh
+# run all tests, against all supported OSes
+./travis_tests.sh
+
+
+
 # install dependencies, setup pipenv
 pip install --user pipenv
 pipenv install -r test-requirements.txt --python 2.7
 
-# run all test scenarios
+# run all test scenarios, defaults to Ubuntu 18.04 Bionic
 pipenv run molecule test --all
 
 # run a single test scenario
-pipenv run molecule test --scenario=name [default | agent | change-log-path]
+pipenv run molecule test --scenario=[default]
 
 # build a specific environment, for manual debugging
-export DOCKER_IMAGE_BASE=idealista/jdk:8u171-jessie-openjdk-headless
-export DOCKER_IMAGE_BASE=idealista/jdk:8u212-stretch-openjdk-headless
-export DOCKER_IMAGE_BASE=idealista/jdk:8u191-xenial-openjdk-headless
-export DOCKER_IMAGE_BASE=idealista/jdk:8u191-bionic-openjdk-headless
-export DOCKER_IMAGE_BASE=idealista/jdk:11.0.1-bionic-openjdk-headless
-export DOCKER_IMAGE_BASE=idealista/jdk:11-centos-openjdk-headless
-pipenv run molecule verify
-docker exec -it tomcat /bin/bash
+pipenv run molecule converge
+docker exec -it auditbeat-ubuntu_bionic /bin/bash
     cat /etc/os-release
     ps aux
-    systemctl status tomcat
+    systemctl status auditbeat
     apt-get install -y net-tools curl nano
     ss -tlu | netstat -tunlp
     curl localhost:8080
-    cd /opt/tomcat/logs
+    cd /var/log/auditbeat
 ```
 
 ## License

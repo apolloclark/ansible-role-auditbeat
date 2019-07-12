@@ -130,7 +130,7 @@
         hostname: "{{ item.hostname | default(item.name) }}"
         image: "{{ item.pre_build_image | default(false) | ternary('', 'molecule_local/') }}{{ item.image }}"
         state: started
-        recreate: false
+        recreate: true
         log_driver: json-file
         command: "{{ (command_directives_dict | default({}))[item.name] | default(omit) }}"
         pid_mode: "{{ item.pid_mode | default(omit) }}"

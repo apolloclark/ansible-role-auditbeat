@@ -13,18 +13,23 @@ env:
   matrix:
     # CentOS 7
     - DOCKER_IMAGE_BASE=centos:7.6.1810
+    - DOCKER_INST_NAME_SUFFIX=centos_7.6.1810
 
     # Ubuntu Bionic
     - DOCKER_IMAGE_BASE=ubuntu:bionic
+    - DOCKER_INST_NAME_SUFFIX=ubuntu_bionic
 
     # Ubuntu Xenial
     - DOCKER_IMAGE_BASE=ubuntu:xenial
+    - DOCKER_INST_NAME_SUFFIX=ubuntu_xenial
 
     # Debian Stretch
     - DOCKER_IMAGE_BASE=debian:stretch
+    - DOCKER_INST_NAME_SUFFIX=debian_stretch
 
     # Debian Jessie
     - DOCKER_IMAGE_BASE=debian:jessie
+    - DOCKER_INST_NAME_SUFFIX=debian_jessie
 
 script:
   - pipenv run molecule test --all

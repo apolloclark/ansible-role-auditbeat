@@ -1,0 +1,29 @@
+---
+package:
+  {{ auditbeat_combined.name }}:
+    installed: true
+    versions:
+      - {{ auditbeat_combined.version }}
+
+service:
+  {{ auditbeat_combined.name }}:
+    enabled: true
+    running: false
+
+user:
+  {{ auditbeat_combined.sys_user }}:
+    exists: true
+    groups:
+      - {{ auditbeat_combined.sys_group }}
+
+group:
+  {{ auditbeat_combined.sys_group }}:
+    exists: true
+
+command:
+  auditbeat version:
+    exit-status: 0
+    stderr: []
+    stdout:
+      - "auditbeat version {{ auditbeat_combined.version }}"
+    timeout: 10000
