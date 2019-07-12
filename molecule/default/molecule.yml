@@ -16,7 +16,7 @@ provisioner:
     group_vars:
       auditbeat:
         auditbeat:
-          version: "6.6.2"
+          version: ${PACKAGE_VERSION:-7.0.0}
           skip_restart: true
           skip_start: true
   lint:

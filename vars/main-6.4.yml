@@ -8,6 +8,9 @@ auditbeat_defaults:
   install_only: false
   install_repo: true
   skip_restart: false
+  skip_start: false
+  sys_user: "root"
+  sys_group: "root"
 
   # https://www.elastic.co/guide/en/beats/auditbeat/6.4/configuration-general-options.html
   name: "auditbeat"
