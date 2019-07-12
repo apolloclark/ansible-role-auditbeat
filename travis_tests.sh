@@ -2,6 +2,9 @@
 
 pipenv install -r test-requirements.txt --python 2.7
 
+# set the package name
+export PACKAGE=auditbeat
+
 # CentOS 7
 export DOCKER_IMAGE_BASE=centos:7.6.1810
 export DOCKER_INST_NAME_SUFFIX=centos_7.6.1810

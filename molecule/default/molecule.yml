@@ -6,16 +6,16 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: auditbeat-${DOCKER_INST_NAME_SUFFIX:-ubuntu_bionic}
+  - name: ${PACKAGE:-package}-${DOCKER_INST_NAME_SUFFIX:-ubuntu_bionic}
     image: ${DOCKER_IMAGE_BASE:-ubuntu:bionic}
     groups:
-      - auditbeat
+      - ${PACKAGE:-package}
 provisioner:
   name: ansible
   inventory:
     group_vars:
-      auditbeat:
-        auditbeat:
+      ${PACKAGE:-package}:
+        ${PACKAGE:-package}:
           version: ${PACKAGE_VERSION:-7.0.0}
           skip_restart: true
           skip_start: true

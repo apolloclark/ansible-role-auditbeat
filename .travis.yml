@@ -10,6 +10,8 @@ install:
   - pip install pipenv
   - pipenv install -r test-requirements.txt --python 2.7
 env:
+  global:
+    - PACKAGE=auditbeat
   matrix:
     # CentOS 7
     - DOCKER_IMAGE_BASE=centos:7.6.1810
