@@ -13,32 +13,53 @@ env:
   global:
     - PACKAGE=auditbeat
   matrix:
+
+    # RHEL 8.0
+    - DOCKER_IMAGE_BASE=apolloclark/ubi8:8.0
+      DOCKER_INST_NAME_SUFFIX=rhel_8.0
+      PACKAGE_VERSION=7.3.0
+
+    # RHEL 7.6
+    - DOCKER_IMAGE_BASE=apolloclark/ubi7:7.6
+      DOCKER_INST_NAME_SUFFIX=rhel_7.6
+      PACKAGE_VERSION=7.3.0
+
     # CentOS 7
     - DOCKER_IMAGE_BASE=centos:7.6.1810
       DOCKER_INST_NAME_SUFFIX=centos_7.6.1810
-      PACKAGE_VERSION=7.2.0
+      PACKAGE_VERSION=7.3.0
 
     # Ubuntu 18.04 Bionic
     - DOCKER_IMAGE_BASE=ubuntu:bionic
       DOCKER_INST_NAME_SUFFIX=ubuntu_bionic
-      PACKAGE_VERSION=7.2.0
+      PACKAGE_VERSION=7.3.0
 
     # Ubuntu 16.04 Xenial
     - DOCKER_IMAGE_BASE=ubuntu:xenial
       DOCKER_INST_NAME_SUFFIX=ubuntu_xenial
-      PACKAGE_VERSION=7.2.0
+      PACKAGE_VERSION=7.3.0
 
     # Debian 9 Stretch
     - DOCKER_IMAGE_BASE=debian:stretch
       DOCKER_INST_NAME_SUFFIX=debian_stretch
-      PACKAGE_VERSION=7.2.0
+      PACKAGE_VERSION=7.3.0
 
     # Debian 8 Jessie
     - DOCKER_IMAGE_BASE=debian:jessie
       DOCKER_INST_NAME_SUFFIX=debian_jessie
-      PACKAGE_VERSION=7.2.0
+      PACKAGE_VERSION=7.3.0
 
 
+
+    # RHEL 8.0
+    - DOCKER_IMAGE_BASE=apolloclark/ubi8:8.0
+      DOCKER_INST_NAME_SUFFIX=rhel_8.0
+      PACKAGE_VERSION=6.8.1
+
+    # RHEL 7.6
+    - DOCKER_IMAGE_BASE=apolloclark/ubi7:7.6
+      DOCKER_INST_NAME_SUFFIX=rhel_7.6
+      PACKAGE_VERSION=6.8.1
 
     # CentOS 7
     - DOCKER_IMAGE_BASE=centos:7.6.1810
