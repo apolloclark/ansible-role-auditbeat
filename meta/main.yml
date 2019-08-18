@@ -15,10 +15,11 @@ galaxy_info:
         - xenial
     - name: Debian
       versions:
-        - jessie
+        - bionic
         - stretch
     - name: EL
       versions:
+        - 8
         - 7
   galaxy_tags:
     - monitoring
