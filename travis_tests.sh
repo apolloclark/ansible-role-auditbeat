@@ -1,5 +1,7 @@
 #!/bin/bash -eux
 
+rm -f Pipfile*
+pipenv --rm || true
 pipenv install -r test-requirements.txt --python 2.7
 
 # set the package name
@@ -8,12 +10,12 @@ export PACKAGE_VERSION=7.3.0
 
 # RHEL 8
 export DOCKER_IMAGE_BASE=apolloclark/ubi8:8
-export DOCKER_INST_NAME_SUFFIX=rhel_8.0
+export DOCKER_INST_NAME_SUFFIX=rhel_8
 pipenv run molecule test --all
 
 # RHEL 7
 export DOCKER_IMAGE_BASE=apolloclark/ubi7:7
-export DOCKER_INST_NAME_SUFFIX=rhel_7.6
+export DOCKER_INST_NAME_SUFFIX=rhel_7
 pipenv run molecule test --all
 
 # CentOS 7
@@ -32,7 +34,7 @@ export DOCKER_INST_NAME_SUFFIX=ubuntu_18.04
 pipenv run molecule test --all
 
 # Ubuntu 16.04 Xenial
-export DOCKER_IMAGE_BASE=16.04
+export DOCKER_IMAGE_BASE=ubuntu:16.04
 export DOCKER_INST_NAME_SUFFIX=ubuntu_16.04
 pipenv run molecule test --all
 

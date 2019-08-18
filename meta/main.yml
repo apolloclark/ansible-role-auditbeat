@@ -15,12 +15,15 @@ galaxy_info:
         - xenial
     - name: Debian
       versions:
-        - bionic
+        - buster
         - stretch
     - name: EL
       versions:
         - 8
         - 7
+    - name: Amazon
+      versions:
+        - Candidate
   galaxy_tags:
     - monitoring
     - metrics
