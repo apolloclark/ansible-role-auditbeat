@@ -1,5 +1,7 @@
 # Ansible Role: auditbeat
 
+[![Build Status](https://travis-ci.org/apolloclark/ansible-role-auditbeat.svg?branch=master)](https://travis-ci.org/apolloclark/ansible-role-auditbeat)
+
 Ansible Role to install and configure Elastic auditbeat for Ubuntu 18.04 Bionic, Ubuntu 16.04 Xenial, Debian 9 Stretch,
 Debian 8 Jessie, Centos 7.
 
